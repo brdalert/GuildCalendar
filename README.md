@@ -1,2 +1,2 @@
 # eso-calendar
-addon to for ingame calendar for ESO
+addon to for in game calendar for ESO
