@@ -34,12 +34,12 @@ if LibDebugLogger then
 end
 
 
-local function Print(catagory, level)
+local function Print(catagory, level, ...)
   if mainlogger == nil then return end
 
   local logger = category and subloggers[catagory] or mainlogger
 
-  if type(logger.Log) =="function" then logger:log(level, ...) end
+  if type(logger.Log) =="function" then logger:Log(level, ...) end
 end
 
 GuildCalendar.Print = Print
