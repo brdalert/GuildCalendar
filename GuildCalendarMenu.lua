@@ -28,6 +28,16 @@ local optionsData = {
 
     [2] = {
         type = "checkbox",
+        name = "Account Wide Settings",
+        tooltip = "Use settings for account, otherwise use for individual character",
+        getFunc = function()  return GuildCalendar.savedVariables.use_acw end,
+        setFunc = function(value) GuildCalendar.savedVariables.use_acw = value end,
+        default = true,
+        requiresReload = true
+    },
+
+    [3] = {
+        type = "checkbox",
         name = "Display calendar events in local time",
         tooltip = "When on the calendar will use yor local. otherwise it will use the server time",
         getFunc = function() return GuildCalendar.savedVariables.use_local_time end,

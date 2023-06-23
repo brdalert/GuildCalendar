@@ -10,16 +10,12 @@ local GuildCalendar = GuildCalendar
 -- Basic values
 GuildCalendar.name = "GuildCalendar"
 GuildCalendar.version = "0.0.1"
-GuildCalendar.variableVersion = 3
+GuildCalendar.variableVersion = 1
 
 -- Default table for saved variables
 GuildCalendar.Default = {
   offsetX = 0,
   offsetY = 0
-}
-
-GuildCalendar.Settings = {
-  use_local_time = true,
 }
 
 -- Logger 
