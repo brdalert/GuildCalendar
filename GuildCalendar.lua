@@ -3,8 +3,15 @@ local wm = GetWindowManager()
 local _
 GuildCalendar = {}
 GuildCalendar.name = "GuildCalendar"
-function guild_calendar.Inialize()
-    
+
+function GuildCalendar.Initialize()
+  GuildCalendar.inCombat = IsUnitInCombat("player")
+ 
+  EVENT_MANAGER:RegisterForEvent(GuildCalendar.name, EVENT_PLAYER_COMBAT_STATE, GuildCalendar.OnPlayerCombatState)
+ 
+  GuildCalendar.savedVariables = ZO_SavedVars:NewCharacterIdSettings("GuildCalendarSavedVariables", 1, nil, {})
+ 
+  GuildCalendar.RestorePosition()
 end
 
 function GuildCalendar.OnAddOnLoaded(event, addonName)
@@ -16,4 +23,29 @@ function GuildCalendar.OnAddOnLoaded(event, addonName)
     end
 end
 
-  EVENT_MANAGER:RegisterForEvent(GuildCalendar.name, EVENT_ADD_ON_LOADED, GuildCalendar.OnAddOnLoaded)
+
+function GuildCalendar.OnPlayerCombatState(event, inCombat)
+  -- The ~= operator is "not equal to" in Lua.
+  if inCombat ~= GuildCalendar.inCombat then
+    -- The player's state has changed. Update the stored state...
+    GuildCalendar.inCombat = inCombat
+ 
+    -- ...and then update the control.
+    GuildCalendarIndicator:SetHIDDEN(not inCombat)
+  end
+end
+
+function GuildCalendar.OnIndicatorMoveStop()
+  GuildCalendar.savedVariables.left = GuildCalendarIndicator:GetLeft()
+  GuildCalendar.savedVariables.top = GuildCalendarIndicator:GetTop()
+end
+
+function GuildCalendar.RestorePosition()
+  local left = GuildCalendar.savedVariables.left
+  local top = GuildCalendar.savedVariables.top
+ 
+  GuildCalendarIndicator:ClearAnchors()
+  GuildCalendarIndicator:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
+end
+  
+EVENT_MANAGER:RegisterForEvent(GuildCalendar.name, EVENT_ADD_ON_LOADED, GuildCalendar.OnAddOnLoaded)

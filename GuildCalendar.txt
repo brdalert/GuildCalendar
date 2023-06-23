@@ -1,11 +1,8 @@
 ﻿## Title: GuildCalendar
 ## APIVersion: 101037 101038
 ## Author: @brdalert
-## Version: 1.5.14
-## AddOnVersion: 10514
-## DependsOn:
-## OptionalDependsOn: 
-## SavedVariables: 
+## AddOnVersion: 0.0.1
+## IsLibrary: False
 ## Description: This addon adds a event calendar to the guild tabs. 
 
 ; This Add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates.
@@ -17,5 +14,5 @@
 lang/en.lua
 lang/$(language).lua
 
-calendar.lua
-calendar.xml
+GuildCalendar.lua
+GuildCalendar.xml
