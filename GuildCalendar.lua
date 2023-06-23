@@ -31,7 +31,7 @@ function GuildCalendar.OnPlayerCombatState(event, inCombat)
     GuildCalendar.inCombat = inCombat
  
     -- ...and then update the control.
-    GuildCalendarIndicator:SetHIDDEN(not inCombat)
+    GuildCalendarIndicator:SetHidden(not inCombat)
   end
 end
 
@@ -48,4 +48,4 @@ function GuildCalendar.RestorePosition()
   GuildCalendarIndicator:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
 end
   
-EVENT_MANAGER:RegisterForEvent(GuildCalendar.name, EVENT_ADD_ON_LOADED, GuildCalendar.OnAddOnLoaded)
+em:EVENT_MANAGER:RegisterForEvent(GuildCalendar.name, EVENT_ADD_ON_LOADED, GuildCalendar.OnAddOnLoaded)
