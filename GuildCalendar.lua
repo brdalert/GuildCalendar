@@ -1,3 +1,4 @@
+
 local em = GetEventManager()
 local wm = GetWindowManager()
 local _
@@ -9,6 +10,17 @@ local GuildCalendar = GuildCalendar
 -- Basic values
 GuildCalendar.name = "GuildCalendar"
 GuildCalendar.version = "0.0.1"
+GuildCalendar.variableVersion = 3
+
+-- Default table for saved variables
+GuildCalendar.Default = {
+  offsetX = 0,
+  offsetY = 0
+}
+
+GuildCalendar.Settings = {
+  use_local_time = true,
+}
 
 -- Logger 
 local mainlogger
@@ -50,15 +62,19 @@ function GuildCalendar.GetDebugLevels()
 
 end
 
-
+-------------------------------------------------------------------------------------------------
+--  Initialize Function --
+-------------------------------------------------------------------------------------------------
 function GuildCalendar.Initialize()
+  GuildCalendar.savedVariables = ZO_SavedVars:NewAccountWide("SavedVars", GuildCalendar.variableVersion, "Default", GuildCalendar.Default, GetWorldName())
+  
+  GuildCalendar.savedVariables = ZO_SavedVars:NewAccountWide("SavedVars", GuildCalendar.variableVersion, "settings", GuildCalendar.Settings, GetWorldName())
+
   GuildCalendar.inCombat = IsUnitInCombat("player")
  
-  em:RegisterForEvent(GuildCalendar.name, EVENT_PLAYER_COMBAT_STATE, GuildCalendar.OnPlayerCombatState)
- 
-  GuildCalendar.savedVariables = ZO_SavedVars:NewCharacterIdSettings("GuildCalendarSavedVariables", 1, nil, {})
- 
   GuildCalendar.RestorePosition()
+  
+  em:RegisterForEvent(GuildCalendar.name, EVENT_PLAYER_COMBAT_STATE, GuildCalendar.OnPlayerCombatState)
 end
 
 function GuildCalendar.OnAddOnLoaded(event, addonName)
@@ -83,14 +99,14 @@ function GuildCalendar.OnPlayerCombatState(event, inCombat)
 end
 
 function GuildCalendar.OnIndicatorMoveStop()
-  GuildCalendar.savedVariables.left = GuildCalendarIndicator:GetLeft()
-  GuildCalendar.savedVariables.top = GuildCalendarIndicator:GetTop()
+  GuildCalendar.savedVariables.offsetX = GuildCalendarIndicator:GetLeft()
+  GuildCalendar.savedVariables.offsetY = GuildCalendarIndicator:GetTop()
 end
 
 function GuildCalendar.RestorePosition()
-  local left = GuildCalendar.savedVariables.left
-  local top = GuildCalendar.savedVariables.top
- 
+  local left = GuildCalendar.savedVariables.offsetX
+  local top = GuildCalendar.savedVariables.offsetY
+
   GuildCalendarIndicator:ClearAnchors()
   GuildCalendarIndicator:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, left, top)
 end

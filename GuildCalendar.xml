@@ -2,7 +2,7 @@
   <Controls>
     <TopLevelControl name="GuildCalendarIndicator" mouseEnabled="true" movable="true" clampedToScreen="true">
       <Dimensions x="200" y="25" />
-      <Anchor point="BOTTOM" relativeTo="GuiRoot" relativePoint="CENTER" offsetY="-20" />
+      <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="CENTER" offsetX="20" offsetY="-20" />
       <OnInitialized>
         -- LUA code here. This is where you'd check to see if the control needs to be hidden or not.
         GuildCalendarIndicator:SetHidden(not IsUnitInCombat('player'))
