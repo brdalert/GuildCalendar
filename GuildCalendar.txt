@@ -3,6 +3,8 @@
 ## Author: @brdalert
 ## AddOnVersion: 0.0.1
 ## IsLibrary: False
+## DependsOn: LibAddonMenu-2.0>=34 LibCustomMenu>=713
+## OptionalDependsOn: LibDebugLogger
 ## Description: This addon adds a event calendar to the guild tabs. 
 
 ; This Add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates.
