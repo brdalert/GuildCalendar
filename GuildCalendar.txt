@@ -19,4 +19,5 @@ lang/$(language).lua
 
 GuildCalendar.lua
 GuildCalendar.xml
-GuildCalendarMenu.lua
+GuildCalendarSettingsMenu.lua
+GuildCalendarWindow.lua

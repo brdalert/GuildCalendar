@@ -1,0 +1,76 @@
+local em = GetEventManager()
+local wm = GetWindowManager()
+local db
+
+local function slashCommandFunctions(extra)
+  GuildCalendar_Window:Toggle()
+  
+end
+SLASH_COMMANDS["/GCW"] = slashCommandFunctions
+
+local scene = ZO_Scene:New("GuildCalendar_Window_SCENE", SCENE_MANAGER)
+
+local function toggleGuildCalendarWindow()
+
+	if not SCENE_MANAGER:IsShowing("GuildCalendar_Window_SCENE") then
+
+		CombatMetrics_Report_Dialog:SetHidden(true)
+		SCENE_MANAGER:Toggle("GuildCalendar_Window_SCENE")
+
+		SCENE_MANAGER:SetInUIMode(true)
+
+	else
+
+		SCENE_MANAGER:Toggle("GuildCalendar_Window_SCENE")
+
+	end
+end
+local function storeOrigLayout(self)
+
+	self.sizes = {self:GetDimensions()}
+	self.anchors = {}
+	--self.anchors = {{self:GetAnchor(0)}, {self:GetAnchor(1)}}
+
+	local anchors = self.anchors
+
+	for i = 1, 2 do
+
+		local valid, point, relativeTo, relativePoint, x, y, constrains = self:GetAnchor(i-1)
+
+		if valid then anchors[i] = {point, relativeTo, relativePoint, x, y, constrains} end
+
+	end
+
+	for i = 1, self:GetNumChildren() do
+
+		local child = self:GetChild(i)
+		if child then storeOrigLayout(child) end
+
+	end
+end
+
+
+function initCalendarWindow()
+
+  local calendarWindow = GuildCalendar_Window
+
+  storeOrigLayout(calendarWindow)
+
+  local pos = db[GuildCalendar:getName()]
+
+  calendarWindow:ClearAnchors()
+  calendarWindow:SetAnchor(CENTER, nil, TOPLEFT, pos.x, pos.y)
+  
+  local fragment = ZO_HUDFadeSceneFragment:New(calendarWindow)
+
+  scene:AddFragment(fragment)
+
+	calendarWindow.Toggle = toggleGuildCalendarWindow
+end
+
+function GuildCalendar.InitializeUI()
+
+	local _
+
+	initCalendarWindow()
+end

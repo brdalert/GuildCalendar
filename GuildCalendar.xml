@@ -1,22 +1,21 @@
-<GuiXml>
+<Gui>
   <Controls>
-    <TopLevelControl name="GuildCalendarIndicator" mouseEnabled="true" movable="true" clampedToScreen="true">
-      <Dimensions x="200" y="25" />
-      <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="CENTER" offsetX="20" offsetY="-20" />
-      <OnInitialized>
-        -- LUA code here. This is where you'd check to see if the control needs to be hidden or not.
-        GuildCalendarIndicator:SetHidden(not IsUnitInCombat('player'))
-      </OnInitialized>
-      <OnMoveStop>
-        GuildCalendar.OnIndicatorMoveStop()
-      </OnMoveStop>
- 
+    <label name="GuildCalendar_LabelFontcontrol" font="ZoFontGameSmall" virtual="true">
+
+    <Backdrop name="GuildCalendar_BackgroundFramed_Solid" virtual="true" edgeColor="FFFFFFFF" centerColor="00000000">
+			
+			<Edge file="GuildCalendar/art/simpleframe4.dds" edgeFileWidth="128" edgeFileHeight="16" edgeSize="8"/>
+			
+		</Backdrop>
+
+    <TopLevelControl name="GuildCalendar_Window" clampedToScreen=true mouseEnabled="true" movable="true" hidden=true>
+      <Dimensions x="1000" y="770" />
       <Controls>
-        <Label name="$(parent)Label" width="200" height="25" font="ZoFontWinH1" inheritAlpha="true" color="FF0000"
-            wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="Fighting!">
-          <Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" />
-        </Label>
+        <Backdrop name="$(parent)BG" inherits="GuildCalendar_BackgroundFramed_Solid" edgeColor="FF000000" centerColor="EE000000">
+					<AnchorFill/>
+				</Backdrop>
       </Controls>
+      <OnMoveStop>GuildCalendar.SavePosition(self)</OnMoveStop>
     </TopLevelControl>
   </Controls>
 </GuiXml>
